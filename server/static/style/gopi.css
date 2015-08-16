@@ -1,0 +1,332 @@
+body {
+    font-size: 15px ;
+    font-family: Montserrat, arial, sans-serif;
+    background-color: #00569B;
+    margin: 0;
+}
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+.external:after {
+    background: url('../images/external_small.png') no-repeat;
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin: 0 0 0 3px;
+}
+
+.cf:before, .cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+.cf { zoom: 1; }
+
+.footer_wrapper {
+    position: fixed;
+    bottom:0;
+    height:30px;
+    width:100%;
+    display:block;
+    z-index:1000;
+}
+
+.footer {
+    background-color: rgba(0, 86, 155, 0.85);
+    z-index: 99;
+    margin: 0 auto;
+    height: 30px;
+    width: 600px;
+    display: block;
+    color: #fff;
+    border: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.footer .terms {
+    position: relative;
+    float: left;
+    width: 32%;
+    height: 100%;
+    text-align: left;
+    padding-left: 1%;
+    font-size: 1em;
+    line-height: 2em;
+}
+
+.footer .contact {
+    position: relative;
+    float: left;
+    width: 32%;
+    height: 100%;
+    text-align: center;
+    padding-right: 1%;
+    padding-left: 1%;
+    font-size: 1em;
+    line-height: 2em;
+}
+
+.footer .questions {
+    position: relative;
+    float: right;
+    width: 32%;
+    height: 100%;
+    text-align: right;
+    padding-right: 1%;
+    font-size: 1em;
+    line-height: 2em;
+}
+
+.container {
+    margin: 0 auto;
+    width: 990px;
+    position: relative;
+}
+
+.cellophane {
+    width: 450px;
+    margin: 100px auto 0 auto;
+    background-color: #00569B;
+}
+
+.full {
+    width: 100%;
+}
+
+.almost-full {
+    width: 75%;
+}
+
+.half {
+    width: 50%;
+}
+
+.thirds {
+    width: 32%;
+}
+
+.cellophane .split {
+    position: relative;
+    float: left;
+    width: 50%;
+}
+
+.with-a-bow {
+    border: 1px solid #666666;
+    border-radius: 3px;
+    min-height: 250px;
+}
+
+.entity-container {
+    margin: 10px;
+    color: #ffffff;
+}
+
+.entity-container .entity-row {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.entity-container .entity-row .label-cell {
+    position: relative;
+    float: left;
+    width: 40%;
+}
+.entity-container .entity-row .value-cell {
+    position: relative;
+    float: left;
+    width: 60%;
+    text-align: right;
+}
+
+.entity-container .entity-row .third-cell {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 32%;
+}
+
+.entity-container .entity-row .slider-cell {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 50%;
+    padding-left: 2%;
+}
+
+.entity-container .entity-row .slider-label-cell {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 11%;
+    padding-left: 2%;
+}
+
+.entity-container .entity-row .full-cell {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.entity-container .entity-row .direction-cell {
+    position: relative;
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.entity-container .entity-row .yo-cell {
+    position: relative;
+    float: right;
+    text-align: right;
+    width: 50px;
+}
+
+.yo-end {
+    display: inline-block;
+    margin: 0 0 -2px 10px;
+}
+
+.entity-container .entity-row .formatted {
+    font-size: 1.4em;
+}
+
+.entity-container .entity-row .big-formatted {
+    font-size: 1.8em;
+}
+
+.entity-container .entity-row .sub-heading {
+    width: 100%;
+    font-size: 3em;
+}
+
+
+.entity-container .entity-row .small-heading {
+    width: 100%;
+    font-size: 1.3em;
+}
+
+.entity-container .with-space {
+    margin-bottom: 50px;
+}
+
+input, button {
+    width: 100%;
+    height: 2em;
+    font-family: Montserrat, arial, sans-serif;
+    font-size: 1.2em;
+    background-color: #ffffff;
+    border-radius: 3px;
+    color: #00569B;
+    outline: none;
+    padding: 5px;
+}
+
+input {
+    text-transform: uppercase;
+    border: 0 none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #222222;
+    outline: none;
+}
+
+button {
+    color: #ffffff;
+    background-color: #00569B;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003870;
+}
+
+button:active {
+    background-color: #003870;
+}
+
+
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg)
+}
+
+.fa-rotate-135 {
+    -webkit-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    transform: rotate(315deg)
+}
+
+.fa-rotate-225 {
+    -webkit-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    transform: rotate(315deg)
+}
+
+@media screen and (max-width: 600px) {
+    .entity-container .entity-row .sub-heading {
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .container{
+        width: 100%;
+    }
+
+    .cellophane{
+        width: 100%;
+        margin: 0;
+    }
+
+    .half {
+        width: 100%;
+    }
+
+    .almost-full {
+        width: 100%;
+    }
+
+
+    button {
+        height: 2.5em;
+        font-size: 1.2em;
+    }
+
+    .cellophane .split {
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+
+    .with-a-bow {
+        border-style: solid none solid none;
+        margin: 10px 0 10px 0;
+    }
+
+    .footer_wrapper {
+        position: relative;
+    }
+
+    .footer {
+        width: 100%;
+    }
+
+    .entity-container .entity-row .label-cell {
+        width: 38%;
+        margin-right: 2%;
+    }
+}
