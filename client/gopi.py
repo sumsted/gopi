@@ -46,7 +46,7 @@ def dance():
 
 
 def main():
-    dance()
+    servo(90)
 
 if __name__ == '__main__':
     main()
