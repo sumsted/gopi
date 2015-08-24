@@ -1,7 +1,6 @@
 from bottle import get, route, request, response, run, post, view, static_file, error
 
 
-
 @route('/static/<filepath:path>')
 def render_static(filepath):
     return static_file(filepath, root='./static')
@@ -10,6 +9,12 @@ def render_static(filepath):
 @get("/")
 @view("landing.html")
 def landing():
+    return {}
+
+
+@get("/pid")
+@view("pid.html")
+def pid():
     return {}
 
 

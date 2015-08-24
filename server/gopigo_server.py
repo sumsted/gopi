@@ -1,21 +1,9 @@
 from bottle import get, route, request, response, run, post, debug
 import gopigo
+from tools import handle_padded
 import views
+import pid_api
 
-
-def handle_padded(handler):
-    def decorator(**kwargs):
-        r = handler(kwargs)
-        try:
-            callback = request.query.get('callback')
-        except Exception, e:
-            callback = None
-        if callback is None:
-            return r
-        else:
-            response.content_type = 'text/javascript'
-            return "%s(%r);" % (callback, r)
-    return decorator
 
 
 @get('/write_i2c_block/<address>/<block>')

@@ -1,0 +1,165 @@
+Run 1 - 2 second sampling
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 13, dr: 13, d: 0, ls: 150, rs: 150, rp: 0
+dl: 28, dr: 28, d: 0, ls: 150, rs: 150, rp: 0
+
+****** right
+action received fwd, 150, 5
+dl: 0, dr: 0, d: -5, ls: 150, rs: 130, rp: 5
+dl: 3, dr: 3, d: -5, ls: 150, rs: 110, rp: 5
+dl: 18, dr: 16, d: -3, ls: 150, rs: 90, rp: 5
+dl: 33, dr: 27, d: 1, ls: 150, rs: 110, rp: 5
+dl: 48, dr: 34, d: 9, ls: 150, rs: 130, rp: 5
+
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 2, dr: 2, d: 0, ls: 150, rs: 150, rp: 0
+dl: 17, dr: 16, d: 1, ls: 150, rs: 170, rp: 0
+dl: 32, dr: 29, d: 3, ls: 150, rs: 190, rp: 0
+dl: 47, dr: 46, d: 1, ls: 150, rs: 210, rp: 0
+
+****** left
+action received fwd, 150, -5
+dl: 0, dr: 0, d: 5, ls: 150, rs: 170, rp: -5
+dl: 3, dr: 4, d: 4, ls: 150, rs: 190, rp: -5
+dl: 18, dr: 22, d: 1, ls: 150, rs: 210, rp: -5
+dl: 33, dr: 40, d: -2, ls: 150, rs: 190, rp: -5
+dl: 47, dr: 61, d: -9, ls: 150, rs: 170, rp: -5
+
+****** stop
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 3, dr: 3, d: 0, ls: 150, rs: 150, rp: 0
+dl: 18, dr: 18, d: 0, ls: 150, rs: 150, rp: 0
+
+Run 2 - .5 second sampling, diff 20
+/Users/scottumsted/ves/gopigo/bin/python /Users/scottumsted/Projects/Workspaces/git_workspace/gopi/client/gopi.py
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 0, dr: 1, d: -1, ls: 150, rs: 130, rp: 0
+dl: 4, dr: 5, d: -1, ls: 150, rs: 110, rp: 0
+dl: 9, dr: 10, d: -1, ls: 150, rs: 90, rp: 0
+dl: 14, dr: 13, d: 1, ls: 150, rs: 110, rp: 0
+dl: 19, dr: 16, d: 3, ls: 150, rs: 130, rp: 0
+dl: 24, dr: 19, d: 5, ls: 150, rs: 150, rp: 0
+dl: 29, dr: 23, d: 6, ls: 150, rs: 170, rp: 0
+dl: 34, dr: 28, d: 6, ls: 150, rs: 190, rp: 0
+dl: 39, dr: 34, d: 5, ls: 150, rs: 210, rp: 0
+dl: 44, dr: 40, d: 4, ls: 150, rs: 230, rp: 0
+dl: 49, dr: 47, d: 2, ls: 150, rs: 250, rp: 0
+****** right
+action received fwd, 150, 5
+dl: 0, dr: 0, d: -5, ls: 150, rs: 130, rp: 5
+dl: 3, dr: 4, d: -6, ls: 150, rs: 110, rp: 5
+dl: 8, dr: 8, d: -5, ls: 150, rs: 90, rp: 5
+dl: 13, dr: 12, d: -4, ls: 150, rs: 70, rp: 5
+dl: 18, dr: 15, d: -2, ls: 150, rs: 50, rp: 5
+dl: 24, dr: 16, d: 3, ls: 150, rs: 70, rp: 5
+dl: 29, dr: 16, d: 8, ls: 150, rs: 90, rp: 5
+dl: 34, dr: 16, d: 13, ls: 150, rs: 110, rp: 5
+dl: 39, dr: 16, d: 18, ls: 150, rs: 130, rp: 5
+dl: 45, dr: 18, d: 22, ls: 150, rs: 150, rp: 5
+dl: 50, dr: 23, d: 22, ls: 150, rs: 170, rp: 5
+dl: 55, dr: 28, d: 22, ls: 150, rs: 190, rp: 5
+dl: 60, dr: 34, d: 21, ls: 150, rs: 210, rp: 5
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 3, dr: 4, d: -1, ls: 150, rs: 130, rp: 0
+dl: 8, dr: 9, d: -1, ls: 150, rs: 110, rp: 0
+dl: 13, dr: 13, d: 0, ls: 150, rs: 150, rp: 0
+dl: 18, dr: 17, d: 1, ls: 150, rs: 170, rp: 0
+dl: 23, dr: 20, d: 3, ls: 150, rs: 190, rp: 0
+dl: 28, dr: 26, d: 2, ls: 150, rs: 210, rp: 0
+dl: 33, dr: 32, d: 1, ls: 150, rs: 230, rp: 0
+dl: 38, dr: 39, d: -1, ls: 150, rs: 210, rp: 0
+dl: 43, dr: 47, d: -4, ls: 150, rs: 190, rp: 0
+dl: 48, dr: 54, d: -6, ls: 150, rs: 170, rp: 0
+dl: 53, dr: 60, d: -7, ls: 150, rs: 150, rp: 0
+dl: 58, dr: 66, d: -8, ls: 150, rs: 130, rp: 0
+****** left
+action received fwd, 150, -5
+dl: 0, dr: 0, d: 5, ls: 150, rs: 170, rp: -5
+dl: 3, dr: 3, d: 5, ls: 150, rs: 190, rp: -5
+dl: 8, dr: 8, d: 5, ls: 150, rs: 210, rp: -5
+dl: 13, dr: 15, d: 3, ls: 150, rs: 230, rp: -5
+dl: 18, dr: 22, d: 1, ls: 150, rs: 250, rp: -5
+dl: 23, dr: 29, d: -1, ls: 150, rs: 230, rp: -5
+dl: 28, dr: 37, d: -4, ls: 150, rs: 210, rp: -5
+dl: 33, dr: 45, d: -7, ls: 150, rs: 190, rp: -5
+dl: 38, dr: 52, d: -9, ls: 150, rs: 170, rp: -5
+dl: 43, dr: 58, d: -10, ls: 150, rs: 150, rp: -5
+dl: 48, dr: 64, d: -11, ls: 150, rs: 130, rp: -5
+dl: 53, dr: 69, d: -11, ls: 150, rs: 110, rp: -5
+dl: 58, dr: 74, d: -11, ls: 150, rs: 90, rp: -5
+****** stop
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 3, dr: 2, d: 1, ls: 150, rs: 170, rp: 0
+dl: 8, dr: 7, d: 1, ls: 150, rs: 190, rp: 0
+dl: 13, dr: 13, d: 0, ls: 150, rs: 150, rp: 0
+dl: 18, dr: 19, d: -1, ls: 150, rs: 130, rp: 0
+dl: 23, dr: 25, d: -2, ls: 150, rs: 110, rp: 0
+dl: 23, dr: 25, d: -2, ls: 150, rs: 90, rp: 0
+
+Run 3 - 1 second sample, diff 5
+/Users/scottumsted/ves/gopigo/bin/python /Users/scottumsted/Projects/Workspaces/git_workspace/gopi/client/gopi.py
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 7, dr: 8, d: -1, ls: 150, rs: 145, rp: 0
+dl: 15, dr: 16, d: -1, ls: 150, rs: 140, rp: 0
+dl: 23, dr: 24, d: -1, ls: 150, rs: 135, rp: 0
+dl: 31, dr: 32, d: -1, ls: 150, rs: 130, rp: 0
+dl: 40, dr: 39, d: 1, ls: 150, rs: 135, rp: 0
+dl: 48, dr: 47, d: 1, ls: 150, rs: 140, rp: 0
+****** right
+action received fwd, 150, 5
+dl: 0, dr: 0, d: -5, ls: 150, rs: 145, rp: 5
+dl: 3, dr: 3, d: -5, ls: 150, rs: 140, rp: 5
+dl: 12, dr: 11, d: -4, ls: 150, rs: 135, rp: 5
+dl: 20, dr: 19, d: -4, ls: 150, rs: 130, rp: 5
+dl: 28, dr: 26, d: -3, ls: 150, rs: 125, rp: 5
+dl: 36, dr: 34, d: -3, ls: 150, rs: 120, rp: 5
+dl: 45, dr: 41, d: -1, ls: 150, rs: 115, rp: 5
+dl: 53, dr: 47, d: 1, ls: 150, rs: 120, rp: 5
+****** straight
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 2, dr: 3, d: -1, ls: 150, rs: 145, rp: 0
+dl: 13, dr: 13, d: 0, ls: 150, rs: 150, rp: 0
+dl: 21, dr: 22, d: -1, ls: 150, rs: 145, rp: 0
+dl: 30, dr: 30, d: 0, ls: 150, rs: 150, rp: 0
+dl: 38, dr: 38, d: 0, ls: 150, rs: 150, rp: 0
+dl: 46, dr: 46, d: 0, ls: 150, rs: 150, rp: 0
+dl: 54, dr: 54, d: 0, ls: 150, rs: 150, rp: 0
+****** left
+action received fwd, 150, -5
+dl: 0, dr: 0, d: 5, ls: 150, rs: 155, rp: -5
+dl: 3, dr: 3, d: 5, ls: 150, rs: 160, rp: -5
+dl: 11, dr: 12, d: 4, ls: 150, rs: 165, rp: -5
+dl: 20, dr: 21, d: 4, ls: 150, rs: 170, rp: -5
+dl: 28, dr: 30, d: 3, ls: 150, rs: 175, rp: -5
+dl: 36, dr: 40, d: 1, ls: 150, rs: 180, rp: -5
+dl: 45, dr: 51, d: -1, ls: 150, rs: 175, rp: -5
+dl: 53, dr: 61, d: -3, ls: 150, rs: 170, rp: -5
+****** stop
+action received fwd, 150, 0
+dl: 0, dr: 0, d: 0, ls: 150, rs: 150, rp: 0
+dl: 2, dr: 3, d: -1, ls: 150, rs: 145, rp: 0
+dl: 11, dr: 12, d: -1, ls: 150, rs: 140, rp: 0
+dl: 19, dr: 20, d: -1, ls: 150, rs: 135, rp: 0
+dl: 27, dr: 28, d: -1, ls: 150, rs: 130, rp: 0
+dl: 36, dr: 36, d: 0, ls: 150, rs: 150, rp: 0
+dl: 44, dr: 43, d: 1, ls: 150, rs: 155, rp: 0
+dl: 53, dr: 51, d: 2, ls: 150, rs: 160, rp: 0
+action received end, 0, 0
+
+Process finished with exit code 0
+

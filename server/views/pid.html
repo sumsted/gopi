@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gopi</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="196x196" href="/static/images/favicon.ico">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/style/gopi.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:700,400">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container cf">
+    <div class="cellophane cf">
+        <div class="entity-container">
+            <div class="entity-row with-space">
+                <div class="full-cell form sub-heading"><a href="/">gopi</a></div>
+            </div>
+            <div class="entity-row">
+                <button id="stop_id" class="thirds">
+                    <i class="fa fa-stop"></i>
+                </button>
+                <button id="forward_id" class="thirds">
+                    <i class="fa fa-arrow-up"></i>
+                </button>
+                <button id="back_id" class="thirds">
+                    <i class="fa fa-arrow-down"></i>
+                </button>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell formatted">
+                    Speed
+                </div>
+                <div class="slider-cell">
+                    <input id="speed_slider_id" type="range" min="0" max="200" step="5" value="100"
+                           onchange="$('#speed_label_id').html(this.value)"/>
+                </div>
+                <div id="speed_label_id" class="slider-label-cell big-formatted">
+                    100
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="direction_id" class="full">
+                        Direction
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="direction_slider_id" type="range" min="-50" max="50" step="1" value="0"
+                           onchange="$('#direction_label_id').html(this.value)"/>
+                </div>
+                <div id="direction_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="calibration_id" class="full">
+                        Calibration
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="calibration_slider_id" type="range" min="-50" max="50" step="1" value="20"
+                           onchange="$('#calibration_label_id').html(this.value)"/>
+                </div>
+                <div id="calibration_label_id" class="slider-label-cell big-formatted">
+                    20
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="kp_id" class="full">
+                        Kp
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="kp_slider_id" type="range" min="0" max="50" step="1" value="0"
+                           onchange="$('#kp_label_id').html(this.value)"/>
+                </div>
+                <div id="kp_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="ki_id" class="full">
+                        Ki
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="ki_slider_id" type="range" min="0" max="50" step="1" value="0"
+                           onchange="$('#ki_label_id').html(this.value)"/>
+                </div>
+                <div id="ki_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="kd_id" class="full">
+                        Kd
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="kd_slider_id" type="range" min="0" max="50" step="1" value="0"
+                           onchange="$('#kd_label_id').html(this.value)"/>
+                </div>
+                <div id="kd_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row">
+                <button id="motion_test_id" class="thirds">
+                    <i class="fa fa-heart"></i>
+                </button>
+                <button id="tune_id" class="thirds">
+                    <i class="fa fa-flash"></i>
+                </button>
+                <button id="battery_id" class="thirds">
+                    <i class="fa fa-battery-half"></i>
+                </button>
+            </div>
+            <div class="entity-row with-space">
+                <div id="result_id" class="full-cell form sub-heading"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    $("#forward_id").click(function (e) {
+        e.stopPropagation();
+        var s1 = $("#speed_slider_id").val();
+        var s2 = $("#direction_slider_id").val();
+        var s3 = $("#calibration_slider_id").val();
+        var s4 = $("#kp_slider_id").val();
+        var s5 = $("#ki_slider_id").val();
+        var s6 = $("#kd_slider_id").val();
+        $.get("/pid/fwd/" + s1 + '/' + s2 + '/' + s3 + '/' + s4 + '/' + s5 + '/' + s6, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#stop_id").click(function (e) {
+        e.stopPropagation();
+        $.get("/pid/stop", function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#back_id").click(function (e) {
+        e.stopPropagation();
+        var s1 = $("#speed_slider_id").val();
+        var s2 = $("#direction_slider_id").val();
+        var s3 = $("#calibration_slider_id").val();
+        var s4 = $("#kp_slider_id").val();
+        var s5 = $("#ki_slider_id").val();
+        var s6 = $("#kd_slider_id").val();
+        $.get("/pid/bwd/" + s1 + '/' + s2 + '/' + s3 + '/' + s4 + '/' + s5 + '/' + s6, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#speed_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#speed_slider_id").val();
+        $.get("/pid/speed/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#direction_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#direction_slider_id").val();
+        $.get("/pid/direction/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#calibration_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#calibration_slider_id").val();
+        $.get("/pid/calibration/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#kp_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#kp_slider_id").val();
+        $.get("/pid/kp/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#ki_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#ki_slider_id").val();
+        $.get("/pid/ki/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#kd_id").click(function (e) {
+        e.stopPropagation();
+        var s = $("#kd_slider_id").val();
+        $.get("/pid/kd/" + s, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#tune_id").click(function (e) {
+        e.stopPropagation();
+        var s1 = $("#calibration_slider_id").val();
+        var s2 = $("#kp_slider_id").val();
+        var s3 = $("#ki_slider_id").val();
+        var s4 = $("#kd_slider_id").val();
+        $.get("/pid/tune/" + s1 + '/' + s2 + '/' + s3 + '/' + s4, function (d) {
+            $("#result_id").html(d.return_value);
+        });
+    });
+
+    $("#battery_id").click(function (e) {
+        e.stopPropagation();
+        $.get("/volt", function (d) {
+            $("#result_id").html(d.return_value + " V");
+        });
+    });
+
+    $("#reset_id").click(function (e) {
+        e.stopPropagation();
+        $.get("/servo/90", function (d) {
+            $("#result_id").html(d.return_value);
+            $.get("/set_speed/100", function (d) {
+                $("#servo_slider_id").val(90);
+                $("#servo_label_id").html("90");
+                $("#speed_slider_id").val(100);
+                $("#speed_label_id").html("100");
+                $("#result_id").html("device reset");
+            });
+        });
+    });
+
+</script>
+</body>
+</html>
