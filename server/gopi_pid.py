@@ -1,7 +1,12 @@
 import multiprocessing
-from bottle import get, route, request, response, run, post, debug
+from bottle import get, route, request, response, run, post, debug, view
 from pidcontroller import PidController
 from tools import handle_padded
+import common_views
+
+
+debug_mode = True
+port = 8081
 
 
 # Start the pid controller process
@@ -11,6 +16,18 @@ motion_child = PidController(action_queue, results_queue)
 motion_child.start()
 
 
+#################
+###### views ####
+#################
+@get("/")
+@view("pid.html")
+def landing():
+    return {}
+
+
+#################
+###### api ######
+#################
 @get('/pid/fwd/<speed>/<direction>/<calibration>/<kp>/<ki>/<kd>')
 @handle_padded
 def pid_fwd(kargs):
@@ -49,12 +66,13 @@ def pid_speed(kargs):
     return 1
 
 
-@get('/pid/tune/<direction>/<direction>')
-@handle_padded
-def pid_direction(kargs):
-    action = {'command': 'direction', 'direction': int(kargs['direction'])}
-    action_queue.put(action)
-    return 1
+# todo: add tune call
+# @get('/pid/tune/<direction>/<direction>')
+# @handle_padded
+# def pid_direction(kargs):
+#     action = {'command': 'direction', 'direction': int(kargs['direction'])}
+#     action_queue.put(action)
+#     return 1
 
 
 @get('/pid/kp/<kp>')
@@ -94,3 +112,7 @@ def pid_end(kargs):
     action_queue.put(action)
     return 1
 
+
+if __name__ == '__main__':
+    debug(debug_mode)
+    run(host='0.0.0.0', port=port, debug=debug_mode)

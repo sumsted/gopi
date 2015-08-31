@@ -9,38 +9,47 @@ class PidController(multiprocessing.Process):
     def __init__(self, action_queue, results_queue):
         super(PidController, self).__init__()
         print("time_elapsed, kp, ki, kd, delta_l,delta_r, error_p, error_i, error_d, correction, speed, right_speed")
+
         self.action_queue = action_queue
         self.results_queue = results_queue
-        self.kp = self.ki = self.kd = self.calibration = 0
-        self.error_i = 0
-        self.last_error_p = 0
-        self.time_elapsed = 0
-        self.base_l = self.latest_l = 0
-        self.base_r = self.latest_r = 0
-        self.start_time = self.last_time = 0
-        self.safe_distance = 30
-        self.current_speed = 0
-        self.direction = 0
 
-    @staticmethod
-    def _get_current_milliseconds():
-        # return time.time()
-        return int(round(time.time() * 1000))
+        self.safe_distance = None
+        self.current_speed = None
+        self.kp = None
+        self.ki = None
+        self.kd = None
+        self.calibration = None
+        self.error_i = None
+        self.base_l = None
+        self.latest_l = None
+        self.base_r = None
+        self.latest_r = None
+        self.start_time = None
+        self.last_time = None
+        self.last_error_p = None
+        self.direction = None
+        self._reset()
 
     def _reset(self):
         # enable_encoders()
         # time.sleep(1)
+        self.safe_distance = 10
+        self.current_speed = 0
         self.kp = 10
         self.ki = 0
         self.kd = 0
         self.calibration = 0
         self.error_i = 0
-        self.time_elapsed = 0
-        self.base_l = enc_read(0)
-        self.base_r = enc_read(1)
+        self.base_l = self.latest_l = enc_read(0)
+        self.base_r = self.latest_r = enc_read(1)
         self.start_time = self.last_time = self._get_current_milliseconds()
         self.last_error_p = 0
         self.direction = 0
+
+
+    @staticmethod
+    def _get_current_milliseconds():
+        return int(round(time.time() * 1000))
 
     def _tune(self, kp, ki, kd):
         self.kp = kp
@@ -63,22 +72,18 @@ class PidController(multiprocessing.Process):
         current_time = self._get_current_milliseconds()
         time_elapsed = current_time - self.last_time
 
-        # print self.base_l, self.base_r
-        # print latest_l, latest_r
-
         delta_l = (latest_l - self.base_l)
         delta_r = (latest_r - self.base_r)
         error_p = delta_l - delta_r
         self.error_i += int(error_p * time_elapsed / 1000)
-        error_d = (error_p - self.last_error_p) / time_elapsed
+        error_d = 0 if time_elapsed == 0 else (error_p - self.last_error_p) / time_elapsed
 
         correction = self.kp * error_p + self.ki * self.error_i + self.kd * error_d + self.calibration
 
-        # print("dl: %d, dr: %d, te: %d, ep: %d, ei: %d, ed: %d, s: %d, c: %d, rs: %d" %
-        print("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" %
-              (time_elapsed, self.kp, self.ki, self.kd, delta_l, delta_r, error_p,
-               self.error_i, error_d, correction,
-               self.current_speed - int(correction / 2), self.current_speed + int(correction / 2)))
+        # print("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" %
+        #       (time_elapsed, self.kp, self.ki, self.kd, delta_l, delta_r, error_p,
+        #        self.error_i, error_d, correction,
+        #        self.current_speed - int(correction / 2), self.current_speed + int(correction / 2)))
 
         self.last_error_p = error_p
         self.last_time = current_time
@@ -90,8 +95,8 @@ class PidController(multiprocessing.Process):
         action = {'command': 'pass', 'speed': 0}
         while True:
             try:
-                # action = self.action_queue.get(True, .2)
-                action = self.action_queue.get(False)
+                action = self.action_queue.get(True, 1)
+                # action = self.action_queue.get(False)
                 if action['command'] == 'stop':
                     stop()
                     self._reset()

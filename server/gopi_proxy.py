@@ -1,11 +1,26 @@
-from bottle import get, route, request, response, run, post, debug
+from bottle import get, route, request, response, run, post, debug, static_file, view, error
 import gopigo
 from tools import handle_padded
-import views
-import pid_api
+import common_views
 
 
+debug_mode = True
+port = 8080
 
+
+#################
+###### views ####
+#################
+
+@get("/")
+@view("landing.html")
+def landing():
+    return {}
+
+
+#################
+###### api ######
+#################
 @get('/write_i2c_block/<address>/<block>')
 @handle_padded
 def write_i2c_block(kargs):
@@ -341,5 +356,7 @@ def ir_recv_pin(kargs):
     r = {'return_value': gopigo.ir_recv_pin(int(kargs['pin']))}
     return r
 
-debug(True)
-run(host='0.0.0.0', port=8080, debug=True)
+
+if __name__ == '__main__':
+    debug(debug_mode)
+    run(host='0.0.0.0', port=port, debug=debug_mode)
