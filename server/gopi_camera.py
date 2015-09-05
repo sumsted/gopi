@@ -140,6 +140,7 @@ class GopiImage():
         image = Image.open(cStringIO.StringIO(self.image_byte_array))
         image_data = image.getdata()
         match = None
+        colors = ''
         for degrees, spot in self.SPOT_MAP.iteritems():
             r, g, b = 0, 0, 0
             for x in range(spot[0], spot[2]):
@@ -152,10 +153,12 @@ class GopiImage():
             ag = g / num_pixels
             ab = b / num_pixels
             print('%d, (%d, %d, %d)' % (degrees, ar, ag, ab))
+            colors += '%d, (%d, %d, %d); ' % (degrees, ar, ag, ab)
+
             if ar > self.COLORS[color][0] and ag < self.COLORS[color][1] and ab < self.COLORS[color][2]:
                 match = degrees
                 break
-        return match
+        return match, colors
 
 
 @get('/cam/target')
@@ -190,8 +193,8 @@ def cam_image(kargs):
     with picamera.PiCamera() as camera:
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-    degrees = gpi.find_color(kargs['color'])
-    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
+    degrees, colors = gpi.find_color(kargs['color'])
+    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees, 'colors': colors}
 
 
 @get('/cam/spot/<degrees>')
