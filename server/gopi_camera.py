@@ -83,7 +83,7 @@ class GopiImage():
         fp.close()
         return 'data:image/png;base64,' + base64.b64encode(image_byte_array)
 
-    def get_image_spot_overlay(self):
+    def get_image_spot_overlay(self, highlight=None):
         image = Image.open(cStringIO.StringIO(self.image_byte_array))
         red = '#FF0000'
         green = '#48BD41'
@@ -103,6 +103,18 @@ class GopiImage():
             draw.line(line, fill=yellow, width=1)
             line = (spot[0], spot[3], spot[0], spot[1])
             draw.line(line, fill=yellow, width=1)
+
+        if highlight is not None:
+            spot = self.SPOT_MAP[highlight]
+            line = (spot[0], spot[1], spot[2], spot[1])
+            draw.line(line, fill=red, width=3)
+            line = (spot[2], spot[1], spot[2], spot[3])
+            draw.line(line, fill=red, width=3)
+            line = (spot[2], spot[3], spot[0], spot[3])
+            draw.line(line, fill=red, width=3)
+            line = (spot[0], spot[3], spot[0], spot[1])
+            draw.line(line, fill=red, width=3)
+
 
         fp = io.BytesIO()
         image.save(fp, 'PNG')
@@ -153,7 +165,7 @@ def cam_image(kargs):
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
 
-    return {'image': gpi.get_image_spot_overlay()}
+    return {'image': gpi.get_image_spot_overlay(0)}
 
 
 @get('/cam/spot/<degrees>')
