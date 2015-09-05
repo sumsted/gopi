@@ -199,22 +199,22 @@ def cam_image(kargs):
 def cam_spot(kargs):
     pass
 
+#
+# if __name__ == '__main__':
+#     infile = 'static/images/red.jpg'
+#     outfile = 'static/images/wo.html'
+#     iba = open(infile, 'rb').read()
+#     gpi = GopiImage()
+#     gpi.write(iba)
+#
+#     gpi.find_color('red')
+#     b = gpi.get_image_spot_overlay()
+#
+#     with open(outfile, 'w') as of:
+#         of.write('<html><body><img src="data:image/png;base64,' + b + '"></body></html>')
+#     pass
+#
 
 if __name__ == '__main__':
-    infile = 'static/images/red.jpg'
-    outfile = 'static/images/wo.html'
-    iba = open(infile, 'rb').read()
-    gpi = GopiImage()
-    gpi.write(iba)
-
-    gpi.find_color('red')
-    b = gpi.get_image_spot_overlay()
-
-    with open(outfile, 'w') as of:
-        of.write('<html><body><img src="data:image/png;base64,' + b + '"></body></html>')
-    pass
-
-
-# if __name__ == '__main__':
-#     debug(debug_mode)
-#     run(host='0.0.0.0', port=port, debug=debug_mode)
+    debug(debug_mode)
+    run(host='0.0.0.0', port=port, debug=debug_mode)
