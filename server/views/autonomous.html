@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gopi</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" sizes="196x196" href="/static/images/favicon.ico">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/style/gopi.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Montserrat:700,400">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container cf">
+    <div class="cellophane cf">
+        <div class="entity-container">
+            <div class="entity-row with-space">
+                <div class="full-cell form sub-heading"><a href="/">gopi</a></div>
+            </div>
+            <div class="entity-row">
+                <div class="third-cell">
+                    <button id="camera_id" class="full">
+                        <i class="fa fa-camera"></i>
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="repeat_slider_id" type="range" min="0" max="1" step="1" value="0" list="frequencyid"
+                           onchange="$('#repeat_label_id').html(this.value)"/>
+                </div>
+                <div id="repeat_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row with-space">
+                <div id="result_id" class="full-cell form sub-heading">
+                    <img id="camera_image"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    function getImage() {
+        $.get("/cam/image", function (d) {
+            $("#camera_image").attr("src", d.image);
+            if(document.getElementById('repeat_slider_id').value==="1"){
+                setTimeout(getImage, 250);
+            }
+        });
+    }
+
+    $("#camera_id").click(
+            function (e) {
+                e.stopPropagation();
+                getImage();
+            }
+    );
+</script>
+</body>
+</html>

@@ -9,7 +9,7 @@ import common_views
 
 
 debug_mode = True
-port = 8080
+port = 8082
 
 @get("/")
 @view("camera.html")
