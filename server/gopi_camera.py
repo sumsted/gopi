@@ -206,8 +206,8 @@ def cam_image(kargs):
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
     degrees, spots = gpi.find_color(kargs['color'])
-    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
-
+    # return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
+    return spots
 
 @get('/cam/spot/<degrees>')
 @handle_padded
