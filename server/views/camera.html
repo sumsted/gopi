@@ -19,11 +19,17 @@
                 <div class="full-cell form sub-heading"><a href="/">gopi</a></div>
             </div>
             <div class="entity-row">
-                <div class="third-cell">
-                    <button id="camera_id" class="full">
-                        <i class="fa fa-camera"></i>
-                    </button>
-                </div>
+                <button id="target_id" class="full">
+                    <i class="fa fa-bullseye"></i>
+                </button>
+                <button id="box_id" class="full">
+                    <i class="fa fa-square-o"></i>
+                </button>
+                <button id="find_id" class="full">
+                    <i class="fa fa-binoculars"></i>
+                </button>
+            </div>
+            <div class="entity-row">
                 <div class="slider-cell">
                     <input id="repeat_slider_id" type="range" min="0" max="1" step="1" value="0" list="frequencyid"
                            onchange="$('#repeat_label_id').html(this.value)"/>
@@ -42,8 +48,15 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-    function getImage() {
-        $.get("/cam/image", function (d) {
+
+    function getTargetImage() {
+        $.get("/cam/target", function (d) {
+            $("#camera_image").attr("src", d.image);
+        });
+    }
+
+    function getBoxImage() {
+        $.get("/cam/box", function (d) {
             $("#camera_image").attr("src", d.image);
             if(document.getElementById('repeat_slider_id').value==="1"){
                 setTimeout(getImage, 250);
@@ -51,10 +64,30 @@
         });
     }
 
-    $("#camera_id").click(
+    function getFindImage(color) {
+        $.get("/cam/find/"+color, function (d) {
+            $("#camera_image").attr("src", d.image);
+        });
+    }
+
+    $("#target_id").click(
             function (e) {
                 e.stopPropagation();
-                getImage();
+                getTargetImage();
+            }
+    );
+
+    $("#box_id").click(
+            function (e) {
+                e.stopPropagation();
+                getBoxImage();
+            }
+    );
+
+    $("#find_id").click(
+            function (e) {
+                e.stopPropagation();
+                getFindImage("red");
             }
     );
 </script>

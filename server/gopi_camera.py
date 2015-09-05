@@ -120,7 +120,7 @@ class GopiImage():
         pass
 
 
-@get('/cam/image')
+@get('/cam/target')
 @handle_padded
 def cam_image(kargs):
     gpi = GopiImage()
@@ -129,7 +129,30 @@ def cam_image(kargs):
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
 
-    # return {'image': gpi.get_image_target_overlay()}
+    return {'image': gpi.get_image_target_overlay()}
+
+
+@get('/cam/box')
+@handle_padded
+def cam_image(kargs):
+    gpi = GopiImage()
+
+    with picamera.PiCamera() as camera:
+        camera.resolution = gpi.IMAGE_SIZE
+        camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
+
+    return {'image': gpi.get_image_spot_overlay()}
+
+
+@get('/cam/find/<color>')
+@handle_padded
+def cam_image(kargs):
+    gpi = GopiImage()
+
+    with picamera.PiCamera() as camera:
+        camera.resolution = gpi.IMAGE_SIZE
+        camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
+
     return {'image': gpi.get_image_spot_overlay()}
 
 
