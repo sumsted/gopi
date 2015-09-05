@@ -19,11 +19,19 @@
                 <div class="full-cell form sub-heading"><a href="/">gopi</a></div>
             </div>
             <div class="entity-row">
-                <button id="camera_id" class="thirds">
-                    <i class="fa fa-camera"></i>
-                </button>
+                <div class="third-cell">
+                    <button id="camera_id" class="full">
+                        <i class="fa fa-camera"></i>
+                    </button>
+                </div>
+                <div class="slider-cell">
+                    <input id="repeat_slider_id" type="range" min="0" max="1" step="1" value="0" list="frequencyid"
+                           onchange="$('#repeat_label_id').html(this.value)"/>
+                </div>
+                <div id="repeat_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
             </div>
-
             <div class="entity-row with-space">
                 <div id="result_id" class="full-cell form sub-heading">
                     <img id="camera_image"/>
@@ -34,13 +42,21 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-$("#camera_id").click(function(e){
-    e.stopPropagation();
-    $.get("/cam/image", function(d){
-        $("#camera_image").attr("src", d.image);
-    });
-});
+    function getImage() {
+        $.get("/cam/image", function (d) {
+            $("#camera_image").attr("src", d.image);
+            if(document.getElementById('repeat_slider_id').value==="1"){
+                setTimeout(getImage, 250);
+            }
+        });
+    }
 
+    $("#camera_id").click(
+            function (e) {
+                e.stopPropagation();
+                getImage();
+            }
+    );
 </script>
 </body>
 </html>
