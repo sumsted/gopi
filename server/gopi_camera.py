@@ -206,14 +206,21 @@ def cam_image(kargs):
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
     degrees, spots = gpi.find_color(kargs['color'])
-    # return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
-    return spots
+    write_to_file(spots)
+    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
 
 @get('/cam/spot/<degrees>')
 @handle_padded
 def cam_spot(kargs):
     pass
 
+def write_to_file(spot_images):
+    outfile = '/home/pi/webapps/gopi/gopi/static/images/wo.html'
+    with open(outfile, 'w') as of:
+        of.write('<html><body>')
+        for spot in spot_images:
+            of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
+        of.write('</body></html>')
 
 # if __name__ == '__main__':
 #     infile = 'static/images/test.png'
