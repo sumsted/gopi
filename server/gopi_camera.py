@@ -20,9 +20,9 @@ def landing():
 
 class GopiImage():
     COLORS = {
-        'red': (200, 20, 20),
-        'green': (20, 200, 20),
-        'blue': (20, 20, 200)
+        'red': (100, 30, 30),
+        'green': (30, 100, 30),
+        'blue': (30, 30, 100)
     }
 
     IMAGE_SIZE = (320, 240)
@@ -141,24 +141,36 @@ class GopiImage():
         image_data = image.getdata()
         match = None
         colors = ''
+        spot_images = []
         for degrees, spot in self.SPOT_MAP.iteritems():
+            spot_image = image.crop(spot)
+            image_data = spot_image.getdata()
             r, g, b = 0, 0, 0
-            for x in range(spot[0], spot[2]):
-                for y in range(spot[1], spot[3]):
-                    r += image_data[x * y][0]
-                    g += image_data[x * y][1]
-                    b += image_data[x * y][2]
+            for i in range(len(image_data)):
+                r += image_data[i][0]
+                g += image_data[i][1]
+                b += image_data[i][2]
+                # for x in range(spot[0], spot[2]):
+            #     for y in range(spot[1], spot[3]):
+            #         r += image_data[x * y][0]
+            #         g += image_data[x * y][1]
+            #         b += image_data[x * y][2]
             num_pixels = (spot[2] - spot[0]) * (spot[3] - spot[1])
             ar = r / num_pixels
             ag = g / num_pixels
             ab = b / num_pixels
             print('%d, (%d, %d, %d)' % (degrees, ar, ag, ab))
             colors += '%d, (%d, %d, %d); ' % (degrees, ar, ag, ab)
-
-            if ar > self.COLORS[color][0] and ag < self.COLORS[color][1] and ab < self.COLORS[color][2]:
-                match = degrees
-                break
-        return match, colors
+            fp = io.BytesIO()
+            spot_image.save(fp, 'PNG')
+            image_byte_array = fp.getvalue()
+            fp.close()
+            sb64 = 'data:image/png;base64,' + base64.b64encode(image_byte_array)
+            spot_images.append({'image': sb64, 'color': (ar, ag, ab), 'degrees': degrees})
+            # if ar > self.COLORS[color][0] and ag < self.COLORS[color][1] and ab < self.COLORS[color][2]:
+            #     match = degrees
+            #     break
+        return match, spot_images
 
 
 @get('/cam/target')
@@ -193,8 +205,8 @@ def cam_image(kargs):
     with picamera.PiCamera() as camera:
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-    degrees, colors = gpi.find_color(kargs['color'])
-    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees, 'colors': colors}
+    degrees = gpi.find_color(kargs['color'])
+    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
 
 
 @get('/cam/spot/<degrees>')
@@ -202,21 +214,24 @@ def cam_image(kargs):
 def cam_spot(kargs):
     pass
 
-#
+
 # if __name__ == '__main__':
-#     infile = 'static/images/red.jpg'
+#     infile = 'static/images/test.png'
 #     outfile = 'static/images/wo.html'
 #     iba = open(infile, 'rb').read()
 #     gpi = GopiImage()
 #     gpi.write(iba)
 #
-#     gpi.find_color('red')
+#     m, spot_images = gpi.find_color('red')
 #     b = gpi.get_image_spot_overlay()
 #
 #     with open(outfile, 'w') as of:
-#         of.write('<html><body><img src="data:image/png;base64,' + b + '"></body></html>')
+#         of.write('<html><body><img src="' + b + '"></body></html>')
+#         for spot in spot_images:
+#             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
+#         of.write('</body></html>')
 #     pass
-#
+
 
 if __name__ == '__main__':
     debug(debug_mode)

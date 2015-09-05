@@ -67,8 +67,6 @@
     function getFindImage(color) {
         $.get("/cam/find/"+color, function (d) {
             $("#camera_image").attr("src", d.image);
-            console.log('degrees: '+ d.degrees)
-            console.log('colors: '+ d.colors)
         });
     }
 
