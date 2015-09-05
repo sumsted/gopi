@@ -167,9 +167,9 @@ class GopiImage():
             fp.close()
             sb64 = 'data:image/png;base64,' + base64.b64encode(image_byte_array)
             spot_images.append({'image': sb64, 'color': (ar, ag, ab), 'degrees': degrees})
-            # if ar > self.COLORS[color][0] and ag < self.COLORS[color][1] and ab < self.COLORS[color][2]:
-            #     match = degrees
-            #     break
+            if ar > self.COLORS[color][0] and ag < self.COLORS[color][1] and ab < self.COLORS[color][2]:
+                match = degrees
+                break
         return match, spot_images
 
 
