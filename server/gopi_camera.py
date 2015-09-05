@@ -215,7 +215,7 @@ def cam_spot(kargs):
     pass
 
 def write_to_file(spot_images):
-    outfile = '/home/pi/webapps/gopi/gopi/static/images/wo.html'
+    outfile = '/home/pi/webapps/gopi/gopi/server/static/images/wo.html'
     with open(outfile, 'w') as of:
         of.write('<html><body>')
         for spot in spot_images:
