@@ -205,7 +205,7 @@ def cam_image(kargs):
     with picamera.PiCamera() as camera:
         camera.resolution = gpi.IMAGE_SIZE
         camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-    degrees, spots = gpi.find_color(kargs['color'])
+    degrees, spots = gpi.find_color(int(kargs['color']))
     return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
 
 
