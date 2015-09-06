@@ -31,10 +31,19 @@
             </div>
             <div class="entity-row">
                 <div class="slider-cell">
-                    <input id="repeat_slider_id" type="range" min="0" max="1" step="1" value="0" list="frequencyid"
+                    <input id="repeat_slider_id" type="range" min="0" max="1" step="1" value="0"
                            onchange="$('#repeat_label_id').html(this.value)"/>
                 </div>
                 <div id="repeat_label_id" class="slider-label-cell big-formatted">
+                    0
+                </div>
+            </div>
+            <div class="entity-row">
+                <div class="slider-cell">
+                    <input id="color_slider_id" type="range" min="0" max="2" step="1" value="0"
+                           onchange="$('#repeat_label_id').html(this.value)"/>
+                </div>
+                <div id="color_label_id" class="slider-label-cell big-formatted">
                     0
                 </div>
             </div>
@@ -62,18 +71,18 @@
     function getBoxImage() {
         $.get("/cam/box", function (d) {
             $("#camera_image").attr("src", d.image);
-            if(document.getElementById('repeat_slider_id').value==="1"){
+            if (document.getElementById('repeat_slider_id').value === "1") {
                 setTimeout(getBoxImage, 250);
             }
         });
     }
 
     function getFindImage(color) {
-        $.get("/cam/find/"+color, function (d) {
+        $.get("/cam/find/" + color, function (d) {
             $("#camera_image").attr("src", d.image);
             $('#colors_id').empty();
-            $.each(d.spots, function(i, spot){
-                $('#colors_id').append('d:'+ spot.degrees+'('+ spot.color[0]+', '+spot.color[1]+','+spot.color[2]+','+spot.color[3]+')</br>');
+            $.each(d.spots, function (i, spot) {
+                $('#colors_id').append('d:' + spot.degrees + '(' + spot.color[0] + ', ' + spot.color[1] + ',' + spot.color[2] + ',' + spot.color[3] + ')</br>');
             });
         });
     }
@@ -95,7 +104,8 @@
     $("#find_id").click(
             function (e) {
                 e.stopPropagation();
-                getFindImage("green");
+                colors = ['red', 'green', 'blue'];
+                getFindImage(colors[$('#color_slider_id').value]);
             }
     );
 </script>
