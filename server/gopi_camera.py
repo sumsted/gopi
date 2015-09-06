@@ -161,19 +161,19 @@ class GopiImage():
             fp.close()
             sb64 = 'data:image/png;base64,' + base64.b64encode(image_byte_array)
             spot_images.append({'image': sb64, 'color': (ar, ag, ab), 'degrees': degrees})
+            sr = sg = sb = 0
+            for i in range(len(image_data)):
+                sr += (image_data[i][0] - ar) ** 2
+                sg += (image_data[i][1] - ag) ** 2
+                sb += (image_data[i][2] - ab) ** 2
+            sdr = (sr / num_pixels) ** .5
+            sdg = (sg / num_pixels) ** .5
+            sdb = (sb / num_pixels) ** .5
+            print ('sd:(%f, %f, %f)' % (sdr, sdg, sdb))
+            spot_images.append({'degrees': degrees*100, 'image': '', 'color': (sdr, sdg, sdb)})
             if self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
                                     self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
                                     self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
-                sr = sg = sb = 0
-                for i in range(len(image_data)):
-                    sr += (image_data[i][0] - ar) ** 2
-                    sg += (image_data[i][1] - ag) ** 2
-                    sb += (image_data[i][2] - ab) ** 2
-                sdr = (sr / num_pixels) ** .5
-                sdg = (sg / num_pixels) ** .5
-                sdb = (sb / num_pixels) ** .5
-                print ('sd:(%f, %f, %f)' % (sdr, sdg, sdb))
-                spot_images.append({'degrees': -999, 'image': '', 'color': (sdr, sdg, sdb)})
                 match = degrees
                 break
         return match, spot_images
