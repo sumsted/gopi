@@ -41,7 +41,7 @@
             <div class="entity-row">
                 <div class="slider-cell">
                     <input id="color_slider_id" type="range" min="0" max="2" step="1" value="0"
-                           onchange="$('#repeat_label_id').html(this.value)"/>
+                           onchange="$('#color_label_id').html(this.value)"/>
                 </div>
                 <div id="color_label_id" class="slider-label-cell big-formatted">
                     0
@@ -105,7 +105,7 @@
             function (e) {
                 e.stopPropagation();
                 colors = ['red', 'green', 'blue'];
-                getFindImage(colors[$('#color_slider_id').value]);
+                getFindImage(colors[document.getElementById('color_slider_id').value]);
             }
     );
 </script>
