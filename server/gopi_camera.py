@@ -160,7 +160,7 @@ class GopiImage():
             image_byte_array = fp.getvalue()
             fp.close()
             sb64 = 'data:image/png;base64,' + base64.b64encode(image_byte_array)
-            spot_images.append({'image': sb64, 'color': (ar, ag, ab), 'degrees': degrees})
+            spot_images.append({'image': sb64, 'color': (ar, ag, ab, 0), 'degrees': degrees})
             sr = sg = sb = 0
             for i in range(len(image_data)):
                 sr += (image_data[i][0] - ar) ** 2
@@ -170,7 +170,7 @@ class GopiImage():
             sdg = int((sg / num_pixels) ** .5)
             sdb = int((sb / num_pixels) ** .5)
             asd = (sdr + sdg + sdb) / 3
-            print ('sd:(%f, %f, %f)' % (sdr, sdg, sdb))
+            print ('sd:(%f, %f, %f, %f)' % (sdr, sdg, sdb, asd))
             spot_images.append({'degrees': degrees*100, 'image': '', 'color': (sdr, sdg, sdb)})
             if asd < 30 and self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
                self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
@@ -232,24 +232,24 @@ def write_to_file(spot_images):
         of.write('</body></html>')
 
 
-# if __name__ == '__main__':
-#     infile = 'static/images/test3.png'
-#     outfile = 'static/images/wo.html'
-#     iba = open(infile, 'rb').read()
-#     gpi = GopiImage()
-#     gpi.write(iba)
-#
-#     m, spot_images = gpi.find_color('red')
-#     b = gpi.get_image_spot_overlay(m)
-#
-#     with open(outfile, 'w') as of:
-#         of.write('<html><body><img src="' + b + '"></body></html>')
-#         for spot in spot_images:
-#             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
-#         of.write('</body></html>')
-#     pass
-
-
 if __name__ == '__main__':
-    debug(debug_mode)
-    run(host='0.0.0.0', port=port, debug=debug_mode)
+    infile = 'static/images/test3.png'
+    outfile = 'static/images/wo.html'
+    iba = open(infile, 'rb').read()
+    gpi = GopiImage()
+    gpi.write(iba)
+
+    m, spot_images = gpi.find_color('red')
+    b = gpi.get_image_spot_overlay(m)
+
+    with open(outfile, 'w') as of:
+        of.write('<html><body><img src="' + b + '"></body></html>')
+        for spot in spot_images:
+            of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
+        of.write('</body></html>')
+    pass
+
+
+# if __name__ == '__main__':
+#     debug(debug_mode)
+#     run(host='0.0.0.0', port=port, debug=debug_mode)
