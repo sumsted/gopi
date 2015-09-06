@@ -37,19 +37,21 @@ class GopiImage():
     }
 
     def __init__(self):
-        self.image_byte_array = None
+        # self.image_byte_array = None
+        self.image = None
 
     def write(self, image_byte_array):
-        self.image_byte_array = image_byte_array
+        # self.image_byte_array = image_byte_array
+        self.image = Image.open(cStringIO.StringIO(image_byte_array))
 
     def get_image_target_overlay(self):
-        image = Image.open(cStringIO.StringIO(self.image_byte_array))
+        # image = Image.open(cStringIO.StringIO(self.image_byte_array))
         red = '#FF0000'
         green = '#48BD41'
-        draw = ImageDraw.Draw(image)
+        draw = ImageDraw.Draw(self.image)
 
-        width = image.size[0]
-        height = image.size[1]
+        width = self.image.size[0]
+        height = self.image.size[1]
 
         xc = width / 2
         yc = height / 2
@@ -78,27 +80,21 @@ class GopiImage():
         line = (xc, y1, xc, yc + fat_space)
         draw.line(line, fill=green, width=5)
 
-        center = (xc, yc)
         box = (xc - 2, yc - 2, xc + 2, yc + 2)
-        # draw.point(center, fill='#FF0000')
         draw.ellipse(box, fill=red)
 
         fp = io.BytesIO()
-        image.save(fp, 'PNG')
+        self.image.save(fp, 'PNG')
         image_byte_array = fp.getvalue()
         fp.close()
         return 'data:image/png;base64,' + base64.b64encode(image_byte_array)
 
     def get_image_spot_overlay(self, highlight=None):
-        image = Image.open(cStringIO.StringIO(self.image_byte_array))
+        # image = Image.open(cStringIO.StringIO(self.image_byte_array))
         red = '#FF0000'
-        green = '#48BD41'
         yellow = '#FFFF00'
 
-        draw = ImageDraw.Draw(image)
-
-        width = image.size[0]
-        height = image.size[1]
+        draw = ImageDraw.Draw(self.image)
 
         for degrees, spot in self.SPOT_MAP.iteritems():
             line = (spot[0], spot[1], spot[2], spot[1])
@@ -122,28 +118,36 @@ class GopiImage():
             draw.line(line, fill=red, width=3)
 
         fp = io.BytesIO()
-        image.save(fp, 'PNG')
+        self.image.save(fp, 'PNG')
         image_byte_array = fp.getvalue()
         fp.close()
         return 'data:image/png;base64,' + base64.b64encode(image_byte_array)
 
     def get_image_byte_array(self):
-        return self.image_byte_array
+        fp = io.BytesIO()
+        self.image.save(fp, 'PNG')
+        image_byte_array = fp.getvalue()
+        fp.close()
+        return image_byte_array
 
     def get_b64(self):
-        return 'data:image/png;base64,' + base64.b64encode(self.image_byte_array)
+        fp = io.BytesIO()
+        self.image.save(fp, 'PNG')
+        image_byte_array = fp.getvalue()
+        fp.close()
+        return 'data:image/png;base64,' + base64.b64encode(image_byte_array)
 
     def get_spot(self):
         pass
 
     def find_color(self, color):
-        image = Image.open(cStringIO.StringIO(self.image_byte_array))
-        image_data = image.getdata()
+        # image = Image.open(cStringIO.StringIO(self.image_byte_array))
+        image_data = self.image.getdata()
         match = None
         colors = ''
         spot_images = []
         for degrees, spot in self.SPOT_MAP.iteritems():
-            spot_image = image.crop(spot)
+            spot_image = self.image.crop(spot)
             image_data = spot_image.getdata()
             r, g, b = 0, 0, 0
             for i in range(len(image_data)):
@@ -209,10 +213,12 @@ def cam_image(kargs):
         write_to_file(spots)
     return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees}
 
+
 @get('/cam/spot/<degrees>')
 @handle_padded
 def cam_spot(kargs):
     pass
+
 
 def write_to_file(spot_images):
     outfile = '/home/pi/webapps/gopi/gopi/server/static/images/wo.html'
@@ -222,24 +228,24 @@ def write_to_file(spot_images):
             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
         of.write('</body></html>')
 
-# if __name__ == '__main__':
-#     infile = 'static/images/test.png'
-#     outfile = 'static/images/wo.html'
-#     iba = open(infile, 'rb').read()
-#     gpi = GopiImage()
-#     gpi.write(iba)
-#
-#     m, spot_images = gpi.find_color('red')
-#     b = gpi.get_image_spot_overlay(m)
-#
-#     with open(outfile, 'w') as of:
-#         of.write('<html><body><img src="' + b + '"></body></html>')
-#         for spot in spot_images:
-#             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
-#         of.write('</body></html>')
-#     pass
-
-
 if __name__ == '__main__':
-    debug(debug_mode)
-    run(host='0.0.0.0', port=port, debug=debug_mode)
+    infile = 'static/images/test2.png'
+    outfile = 'static/images/wo.html'
+    iba = open(infile, 'rb').read()
+    gpi = GopiImage()
+    gpi.write(iba)
+
+    m, spot_images = gpi.find_color('red')
+    b = gpi.get_image_spot_overlay(m)
+
+    with open(outfile, 'w') as of:
+        of.write('<html><body><img src="' + b + '"></body></html>')
+        for spot in spot_images:
+            of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
+        of.write('</body></html>')
+    pass
+
+
+# if __name__ == '__main__':
+#     debug(debug_mode)
+#     run(host='0.0.0.0', port=port, debug=debug_mode)
