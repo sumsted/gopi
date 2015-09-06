@@ -169,11 +169,12 @@ class GopiImage():
             sdr = int((sr / num_pixels) ** .5)
             sdg = int((sg / num_pixels) ** .5)
             sdb = int((sb / num_pixels) ** .5)
+            asd = (sdr + sdg + sdb) / 3
             print ('sd:(%f, %f, %f)' % (sdr, sdg, sdb))
             spot_images.append({'degrees': degrees*100, 'image': '', 'color': (sdr, sdg, sdb)})
-            if self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
-                                    self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
-                                    self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
+            if asd < 30 and self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
+               self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
+               self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
                 match = degrees
                 break
         return match, spot_images
