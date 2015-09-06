@@ -46,7 +46,7 @@ class GopiImage():
         image = Image.open(cStringIO.StringIO(self.image_byte_array))
         red = '#FF0000'
         green = '#48BD41'
-        draw = ImageDraw.Draw(self.image)
+        draw = ImageDraw.Draw(image)
 
         width = image.size[0]
         height = image.size[1]
