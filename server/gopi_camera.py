@@ -20,7 +20,7 @@ def landing():
 
 class GopiImage():
     COLORS = {
-        'red': (100, 30, 30),
+        'red': (150, 80, 80),
         'green': (30, 100, 30),
         'blue': (30, 30, 100)
     }
@@ -219,7 +219,7 @@ def write_to_file(spot_images):
         of.write('</body></html>')
 
 # if __name__ == '__main__':
-#     infile = 'static/images/test2.png'
+#     infile = 'static/images/test3.png'
 #     outfile = 'static/images/wo.html'
 #     iba = open(infile, 'rb').read()
 #     gpi = GopiImage()
@@ -234,7 +234,7 @@ def write_to_file(spot_images):
 #             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
 #         of.write('</body></html>')
 #     pass
-#
+
 
 if __name__ == '__main__':
     debug(debug_mode)
