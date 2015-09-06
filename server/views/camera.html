@@ -72,7 +72,7 @@
         $.get("/cam/find/"+color, function (d) {
             $("#camera_image").attr("src", d.image);
             $('#colors_id').empty();
-            $(d.spots).each(function(spot){
+            $.each(d.spots, function(spot){
                 $('#colors_id').append('d:'+ spot.degrees+'('+ spot.colors[0]+', '+spot.colors[1]+','+spot.colors[2]+')');
             });
         });
