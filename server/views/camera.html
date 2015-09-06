@@ -43,6 +43,10 @@
                     <img id="camera_image"/>
                 </div>
             </div>
+            <div class="entity-row ">
+                <div id="colors_id" class="full-cell form sub-heading">
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -67,6 +71,10 @@
     function getFindImage(color) {
         $.get("/cam/find/"+color, function (d) {
             $("#camera_image").attr("src", d.image);
+            $('#colors_id').empty();
+            $(d.spots).each(function(){
+                $('#colors_id').append('d:'+ d.spots.degrees+'('+ d.spots.colors[0]+', '+d.spots.colors[1]+','+d.spots.colors[2]+')');
+            });
         });
     }
 
