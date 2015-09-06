@@ -73,7 +73,7 @@
             $("#camera_image").attr("src", d.image);
             $('#colors_id').empty();
             $.each(d.spots, function(i, spot){
-                $('#colors_id').append('d:'+ spot.degrees+'('+ spot.colors[0]+', '+spot.colors[1]+','+spot.colors[2]+')');
+                $('#colors_id').append('d:'+ spot.degrees+'('+ spot.color[0]+', '+spot.color[1]+','+spot.color[2]+')</br>');
             });
         });
     }
