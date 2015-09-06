@@ -20,7 +20,7 @@ def landing():
 
 class GopiImage():
     COLORS = {
-        'red': (150, 80, 80),
+        'red': (150, 100, 100),
         'green': (30, 100, 30),
         'blue': (30, 30, 100)
     }
