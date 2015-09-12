@@ -2,7 +2,7 @@ from Queue import Empty
 import multiprocessing
 import time
 from gopigo import *
-# from client.gopigo_client import *
+#from client.gopigo_client import *
 
 
 class PidController(multiprocessing.Process):
@@ -33,7 +33,7 @@ class PidController(multiprocessing.Process):
     def _reset(self):
         # enable_encoders()
         # time.sleep(1)
-        self.safe_distance = 10
+        self.safe_distance = 1
         self.current_speed = 0
         self.kp = 10
         self.ki = 0
@@ -80,10 +80,10 @@ class PidController(multiprocessing.Process):
 
         correction = self.kp * error_p + self.ki * self.error_i + self.kd * error_d + self.calibration
 
-        # print("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" %
-        #       (time_elapsed, self.kp, self.ki, self.kd, delta_l, delta_r, error_p,
-        #        self.error_i, error_d, correction,
-        #        self.current_speed - int(correction / 2), self.current_speed + int(correction / 2)))
+        print("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" %
+              (time_elapsed, self.kp, self.ki, self.kd, delta_l, delta_r, error_p,
+               self.error_i, error_d, correction,
+               self.current_speed - int(correction / 2), self.current_speed + int(correction / 2)))
 
         self.last_error_p = error_p
         self.last_time = current_time

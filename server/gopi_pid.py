@@ -35,8 +35,8 @@ def pid_fwd(kargs):
               'calibration': int(kargs['calibration']), 'kp': int(kargs['kp']), 'ki': int(kargs['ki']),
               'kd': int(kargs['kd'])}
     action_queue.put(action)
-    return 1
-
+    r = {'return_value': 1}
+    return r
 
 @get('/pid/bwd/<speed>/<direction>/<calibration>/<kp>/<ki>/<kd>')
 @handle_padded
@@ -45,7 +45,8 @@ def pid_bwd(kargs):
               'calibration': int(kargs['calibration']), 'kp': int(kargs['kp']), 'ki': int(kargs['ki']),
               'kd': int(kargs['kd'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 @get('/pid/tune/<calibration>/<kp>/<ki>/<kd>')
@@ -55,7 +56,8 @@ def pid_tune(kargs):
               'calibration': int(kargs['calibration']), 'kp': int(kargs['kp']), 'ki': int(kargs['ki']),
               'kd': int(kargs['kd'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 @get('/pid/speed/<speed>')
@@ -63,7 +65,8 @@ def pid_tune(kargs):
 def pid_speed(kargs):
     action = {'command': 'speed', 'speed': int(kargs['speed'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 # todo: add tune call
@@ -80,7 +83,8 @@ def pid_speed(kargs):
 def pid_kp(kargs):
     action = {'command': 'kp', 'kp': int(kargs['kp'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 @get('/pid/ki/<ki>')
@@ -88,7 +92,8 @@ def pid_kp(kargs):
 def pid_ki(kargs):
     action = {'command': 'ki', 'ki': int(kargs['ki'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 @get('/pid/kd/<kd>')
@@ -96,21 +101,24 @@ def pid_ki(kargs):
 def pid_kd(kargs):
     action = {'command': 'kd', 'kd': int(kargs['kd'])}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 @get('/pid/stop')
 @handle_padded
 def pid_stop(kargs):
     action = {'command': 'stop'}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 @get('/pid/end')
 @handle_padded
 def pid_end(kargs):
     action = {'command': 'end'}
     action_queue.put(action)
-    return 1
+    r = {'return_value': 1}
+    return r
 
 
 if __name__ == '__main__':
