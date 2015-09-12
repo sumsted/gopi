@@ -20,10 +20,16 @@ def landing():
 
 class GopiImage():
     COLORS = {
-        'red': ((110, 0, 0), (255, 100, 100)),
-        'green': ((0, 150, 0), (100, 255, 100)),
-        'blue': ((0, 0, 150), (100, 100, 255))
+        'red': ((110, 0, 0), (255, 50, 50)),
+        'green': ((50, 110, 0), (100, 255, 50)),
+        'blue': ((50, 80, 150), (110, 150, 110))
     }
+
+    # COLORS = {
+    #     'red': ((110, 0, 0), (255, 100, 100)),
+    #     'green': ((0, 150, 0), (100, 255, 100)),
+    #     'blue': ((0, 0, 150), (100, 100, 255))
+    # }
 
     IMAGE_SIZE = (320, 240)
     SPOT_MAP = {
@@ -172,7 +178,7 @@ class GopiImage():
             asd = (sdr + sdg + sdb) / 3
             print ('sd:(%f, %f, %f, %f)' % (sdr, sdg, sdb, asd))
             spot_images.append({'degrees': degrees*100, 'image': '', 'color': (sdr, sdg, sdb, asd)})
-            if asd < 30 and self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
+            if asd < 40 and self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
                self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
                self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
                 match = degrees
