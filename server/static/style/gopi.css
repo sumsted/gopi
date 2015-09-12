@@ -1,6 +1,7 @@
 body {
     font-size: 15px ;
-    font-family: Montserrat, arial, sans-serif;
+    /*font-family: Montserrat, arial, sans-serif;*/
+    font-family:  arial, sans-serif;
     background-color: #00569B;
     margin: 0;
 }
