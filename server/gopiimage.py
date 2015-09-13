@@ -1,26 +1,13 @@
 import base64
 from PIL import Image, ImageDraw
-from bottle import get, debug, run, view
 import picamera
 import cStringIO
 import io
-from tools import handle_padded
-import common_views
-
-
-debug_mode = True
-port = 8082
-
-
-@get("/")
-@view("camera.html")
-def landing():
-    return {}
 
 
 class GopiImage():
     COLORS = {
-        'red': ((80, 0, 0), (255, 50, 50)),
+        'red': ((110, 0, 0), (255, 50, 50)),
         'green': ((0, 110, 0), (100, 255, 50)),
         'blue': ((50, 80, 50), (110, 150, 110))
     }
@@ -41,9 +28,19 @@ class GopiImage():
         10: (220, 100, 260, 140),
         15: (260, 100, 300, 140)
     }
+    FORMAT = 'jpeg'
 
     def __init__(self):
         self.image_byte_array = ''
+
+    def load_camera(self):
+        with picamera.PiCamera() as camera:
+            camera.resolution = self.IMAGE_SIZE
+            camera.capture_sequence([self], format(self.FORMAT), use_video_port=False)
+
+    def load_file(self, file_name):
+        with open(file_name, 'rb') as infile:
+            self.write(infile.read())
 
     def write(self, image_byte_array):
         self.image_byte_array += image_byte_array
@@ -177,85 +174,23 @@ class GopiImage():
             sdb = int((sb / num_pixels) ** .5)
             asd = (sdr + sdg + sdb) / 3
             print ('sd:(%f, %f, %f, %f)' % (sdr, sdg, sdb, asd))
-            spot_images.append({'degrees': degrees*100, 'image': '', 'color': (sdr, sdg, sdb, asd)})
+            spot_images.append({'degrees': degrees * 100, 'image': '', 'color': (sdr, sdg, sdb, asd)})
             if asd < 40 and self.COLORS[color][0][0] <= ar <= self.COLORS[color][1][0] and \
-               self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
-               self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
+                                    self.COLORS[color][0][1] <= ag <= self.COLORS[color][1][1] and \
+                                    self.COLORS[color][0][2] <= ab <= self.COLORS[color][1][2]:
                 match = degrees
                 break
         return match, spot_images
 
 
-@get('/cam/target')
-@handle_padded
-def cam_image(kargs):
-    gpi = GopiImage()
-
-    with picamera.PiCamera() as camera:
-        camera.resolution = gpi.IMAGE_SIZE
-        camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-
-    return {'image': gpi.get_image_target_overlay()}
-
-
-@get('/cam/box')
-@handle_padded
-def cam_image(kargs):
-    gpi = GopiImage()
-
-    with picamera.PiCamera() as camera:
-        camera.resolution = gpi.IMAGE_SIZE
-        camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-
-    return {'image': gpi.get_image_spot_overlay()}
-
-
-@get('/cam/find/<color>')
-@handle_padded
-def cam_image(kargs):
-    gpi = GopiImage()
-
-    with picamera.PiCamera() as camera:
-        camera.resolution = gpi.IMAGE_SIZE
-        camera.capture_sequence([gpi], format="jpeg", use_video_port=False)
-        degrees, spots = gpi.find_color(kargs['color'])
-        # write_to_file(spots)
-    return {'image': gpi.get_image_spot_overlay(degrees), 'degrees': degrees, 'spots': spots}
-
-
-@get('/cam/spot/<degrees>')
-@handle_padded
-def cam_spot(kargs):
-    pass
-
-
-def write_to_file(spot_images):
-    outfile = '/home/pi/webapps/gopi/gopi/server/static/images/wo.html'
-    with open(outfile, 'w') as of:
-        of.write('<html><body>')
-        for spot in spot_images:
-            of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
-        of.write('</body></html>')
-
-
-# if __name__ == '__main__':
-#     infile = 'static/images/test3.png'
-#     outfile = 'static/images/wo.html'
-#     iba = open(infile, 'rb').read()
-#     gpi = GopiImage()
-#     gpi.write(iba)
-#
-#     m, spot_images = gpi.find_color('red')
-#     b = gpi.get_image_spot_overlay(m)
-#
-#     with open(outfile, 'w') as of:
-#         of.write('<html><body><img src="' + b + '"></body></html>')
-#         for spot in spot_images:
-#             of.write('</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
-#         of.write('</body></html>')
-#     pass
-
-
 if __name__ == '__main__':
-    debug(debug_mode)
-    run(host='0.0.0.0', port=port, debug=debug_mode)
+    gpi = GopiImage()
+    gpi.load_file('static/images/test3.png')
+    m, spot_images = gpi.find_color('red')
+    b = gpi.get_image_spot_overlay(m)
+    with open('static/images/testout3.html', 'w') as outfile:
+        outfile.write('<html><body><img src="' + b + '"></body></html>')
+        for spot in spot_images:
+            outfile.write(
+                '</br>' + str(spot['degrees']) + ' - ' + str(spot['color']) + '<img src="' + spot['image'] + '">')
+        outfile.write('</body></html>')

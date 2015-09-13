@@ -1,8 +1,8 @@
 from Queue import Empty
 import multiprocessing
 import time
-from gopigo import *
-#from client.gopigo_client import *
+# from gopigo import *
+from client.gopigo_client import *
 
 
 class PidController(multiprocessing.Process):
@@ -33,7 +33,7 @@ class PidController(multiprocessing.Process):
     def _reset(self):
         # enable_encoders()
         # time.sleep(1)
-        self.safe_distance = 1
+        self.safe_distance = 15
         self.current_speed = 0
         self.kp = 10
         self.ki = 0
@@ -132,6 +132,18 @@ class PidController(multiprocessing.Process):
                     break
                 elif action['command'] == 'pass':
                     pass
+                elif action['command'] == 'left_rot':
+                    set_speed(150)
+                    left_rot()
+                    time.sleep(action['duration'])
+                    stop()
+                    set_speed(0)
+                elif action['command'] == 'right_rot':
+                    set_speed(150)
+                    right_rot()
+                    time.sleep(action['duration'])
+                    stop()
+                    set_speed(0)
                 else:
                     print('wtf is %s' % action['command'])
                     stop()
@@ -143,6 +155,34 @@ class PidController(multiprocessing.Process):
             if us_dist(0) < self.safe_distance:
                 print("EMERGENCY STOP")
                 stop()
+                set_speed(0)
+                servo(130)
+                time.sleep(1)
+                servo(50)
+                time.sleep(1)
+                led_off(0)
+                led_off(1)
+                led_on(0)
+                led_on(1)
+                led_off(0)
+                led_off(1)
+                led_on(0)
+                led_on(1)
+                servo(100)
+                time.sleep(1)
+                servo(80)
+                time.sleep(1)
+                servo(100)
+                time.sleep(1)
+                servo(80)
+                time.sleep(1)
+                servo(90)
+                led_off(0)
+                led_off(1)
+                led_on(0)
+                led_on(1)
+                led_off(0)
+                led_off(1)
                 return
 
             correction = self._correction()
