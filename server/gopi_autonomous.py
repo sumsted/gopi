@@ -57,7 +57,7 @@ class GoPiAutonomous():
             pass
             # set speed 150
             #pid fwd
-            self.action_queue.put({'command': 'fwd', 'speed': 150})
+            self.action_queue.put({'command': 'fwd', 'speed': 200})
             self.motion_child.join()
         else:
             pass
@@ -65,7 +65,7 @@ class GoPiAutonomous():
 
 if __name__ == '__main__':
     gpa = GoPiAutonomous()
-    gpa.start('red')
+    gpa.start('green')
 
 # if __name__ == '__main__':
 #     debug(debug_mode)
