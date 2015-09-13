@@ -57,7 +57,7 @@ class GoPiAutonomous():
             pass
             # set speed 150
             #pid fwd
-            self.action_queue.put({'command': 'fwd', 'speed': 200})
+            self.action_queue.put({'command': 'fwd', 'speed': 100})
             self.motion_child.join()
         else:
             pass

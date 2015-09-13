@@ -57,8 +57,8 @@ class PidController(multiprocessing.Process):
         self.kd = kd
 
     def _set_start_speed(self, speed):
-        set_left_speed(speed - 15)
-        set_right_speed(speed + 15)
+        set_left_speed(speed - 25)
+        set_right_speed(speed + 25)
         self.current_speed = speed
 
     def _set_speed(self, speed):
