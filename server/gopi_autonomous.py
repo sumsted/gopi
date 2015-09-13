@@ -39,19 +39,19 @@ class GoPiAutonomous():
             degrees = result['degrees']
             if degrees is not None:
                 if degrees == -15:
-                    self.action_queue.put({'command': 'left_rot', 'duration': .3})
+                    self.action_queue.put({'command': 'left_rot', 'duration': .05})
                 elif degrees == -10:
-                    self.action_queue.put({'command': 'left_rot', 'duration': .2})
+                    self.action_queue.put({'command': 'left_rot', 'duration': .05})
                 elif degrees == -5:
-                    self.action_queue.put({'command': 'left_rot', 'duration': .1})
+                    self.action_queue.put({'command': 'left_rot', 'duration': .05})
                 elif degrees == 0:
                     found = True
                 if degrees == 5:
-                    self.action_queue.put({'command': 'right_rot', 'duration': .1})
+                    self.action_queue.put({'command': 'right_rot', 'duration': .05})
                 elif degrees == 10:
-                    self.action_queue.put({'command': 'right_rot', 'duration': .2})
+                    self.action_queue.put({'command': 'right_rot', 'duration': .05})
                 elif degrees == 15:
-                    self.action_queue.put({'command': 'right_rot', 'duration': .3})
+                    self.action_queue.put({'command': 'right_rot', 'duration': .05})
             bad_tries += 1
         if found:
             pass
@@ -65,7 +65,7 @@ class GoPiAutonomous():
 
 if __name__ == '__main__':
     gpa = GoPiAutonomous()
-    gpa.start('green')
+    gpa.start('red')
 
 # if __name__ == '__main__':
 #     debug(debug_mode)
